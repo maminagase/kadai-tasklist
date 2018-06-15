@@ -1,0 +1,28 @@
+<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+
+<h1>タスク一覧</h1>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>task</th>
+        <th>status</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+        <% @tasks.each do |task| %>
+           <tr>
+                <td><%= link_to task.id,task %></td>
+                <td><%= task.content %></td>
+                <td><%= task.status %></td>
+           </tr>
+        <% end %>
+    </tbody>
+  </table>
+<%= link_to '新規投稿' ,new_task_path,class: "btn btn-primary" %>
+
+<%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+
+</div>
