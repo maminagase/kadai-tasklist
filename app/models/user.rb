@@ -5,4 +5,10 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
     has_secure_password
+    
+    has_many :tasks
+    
+    # def tasks
+    #     Task.where(user_id: self.id)
+    # end
 end

@@ -10,29 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180615010411) do
-
-  create_table "contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_contents_on_user_id", using: :btree
-  end
-
-  create_table "microposts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_microposts_on_user_id", using: :btree
-  end
+ActiveRecord::Schema.define(version: 20180617151735) do
 
   create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "status"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -43,6 +29,5 @@ ActiveRecord::Schema.define(version: 20180615010411) do
     t.datetime "updated_at",      null: false
   end
 
-  add_foreign_key "contents", "users"
-  add_foreign_key "microposts", "users"
+  add_foreign_key "tasks", "users"
 end
