@@ -3,7 +3,10 @@ before_action :require_user_logged_in, only: [:create, :edit, :update, :new, :sh
 before_action :correct_user, only: [:destroy]
 
     def index
-        @tasks = Task.all
+        if logged_in?
+        @user = current_user
+        @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
+        end
     end
 
     def show
@@ -12,6 +15,7 @@ before_action :correct_user, only: [:destroy]
 
     def new
         @task = Task.new
+        
     end
 
     def create
@@ -21,6 +25,7 @@ before_action :correct_user, only: [:destroy]
             flash[:success] = "投稿されました"
             redirect_to @task
         else
+            @tasks = current_user.microposts.order('created_at DESC').page(params[:page])
             flash.now[:denger] = "投稿されませんでした"
             render :new
         end
@@ -33,6 +38,7 @@ before_action :correct_user, only: [:destroy]
     def update
         @task = Task.find(params[:id])
         
+        @task = current_user.tasks.build(task_params)
         if @task.update(task_params)
             flash[:success] = "更新されました"
             redirect_to @task
@@ -56,6 +62,13 @@ before_action :correct_user, only: [:destroy]
     def task_params
         params.require(:task).permit(:content, :status)
     end
+    
+    def correct_user
+    @task = current_user.microposts.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
+  end
     
 
 end
